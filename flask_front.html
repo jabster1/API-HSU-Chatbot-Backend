@@ -1,0 +1,42 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT API Demo</title>
+</head>
+<body>
+    <h1>ChatGPT API Demo</h1>
+
+    <div>
+        <label for="userInput">User Input:</label>
+        <input type="text" id="userInput">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div>
+        <p id="botResponse"></p>
+    </div>
+
+    <script>
+        function sendMessage() {
+            // Get user input
+            const userInput = document.getElementById('userInput').value;
+
+            // Send user input to the server
+            fetch('http://127.0.0.1:5000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 'user_input': userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the bot's response
+                document.getElementById('botResponse').innerText = data.bot_response;
+            });
+        }
+    </script>
+</body>
+</html>
